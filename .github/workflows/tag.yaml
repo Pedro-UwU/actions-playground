@@ -58,8 +58,13 @@ jobs:
       - name: Remove tag
         run: |
           TAG_TO_RMV=v${{ needs.extract-tag.outputs.TAG }}
-          echo $TAG_TO_RMV
-          git push origin --delete $TAG_TO_RMV
+          echo "TAG_TO_RMV=$TAG_TO_RMV" >> $GITHUB_ENV
+      - uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: ${{ env.TAG_TO_RMV }}
+          delete_release: true 
+          github_token: ${{ secrets.GH_TOKEN }} 
+            
   
 
 
