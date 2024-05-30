@@ -59,6 +59,7 @@ jobs:
         run: |
           TAG_TO_RMV=v${{ needs.extract-tag.outputs.TAG }}
           echo $TAG_TO_RMV
+          git push origin --delete $TAG_TO_RMV
   
 
 
