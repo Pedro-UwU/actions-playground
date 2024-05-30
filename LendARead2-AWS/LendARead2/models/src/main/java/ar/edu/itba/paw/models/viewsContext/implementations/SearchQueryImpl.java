@@ -10,7 +10,7 @@ public class SearchQueryImpl implements SearchQuery {
     private final List<String> physicalConditions;
     private final String search;
     private final AssetInstanceSort assetInstanceSort;
-    private final SortDirection sortDirection;
+    // private final SortDirection sortDirection;
     private final int minRating;
     private final int maxRating;
     private final int userId;
