@@ -13,18 +13,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lift to env
-        id: tag
+        id: raw-tag
         run: |
           echo "RAW_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Parse tag
+        id: tag
         run: |
           PARSED=$(echo $RAW_TAG | sed 's/^v\(.*\)/\1/')
           echo $PARSED
+          echo "TAG=$PARSED" >> $GITHUB_OUTPUT
+          echo "TAG=$PARSED" >> $GITHUB_ENV
       - name: Print tag
         run: |
           echo $TAG
-          echo $RAW_TAG
-          echo ${{ env.RAW_TAG }}
           echo ${{ env.TAG }}
   
 
