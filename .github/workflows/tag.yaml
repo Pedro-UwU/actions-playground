@@ -16,7 +16,7 @@ jobs:
         id: tag
         run: |
           echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          echo "TAG=${$(echo $TAG | sed 's/^v/\(.*\)/\1/')}" >> $GITHUB_ENV
+          echo "TAG=${$(echo $TAG | sed 's/^v\(.*\)/\1/')}" >> $GITHUB_ENV
           echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Print tag
         run: |
