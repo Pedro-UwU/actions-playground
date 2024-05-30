@@ -24,6 +24,8 @@ jobs:
       - name: Print tag
         run: |
           echo $TAG
+          echo $RAW_TAG
+          echo ${{ env.RAW_TAG }}
           echo ${{ env.TAG }}
   
 
