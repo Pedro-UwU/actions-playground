@@ -23,6 +23,8 @@ jobs:
           echo "TAG=$PARSED" >> $GITHUB_OUTPUT
   run-tests:
     runs-on: ubuntu-latest
+    outputs:
+      TEST_RESULT: ${{ steps.test.outputs.TEST_RESULT }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -37,14 +39,23 @@ jobs:
           sudo apt update
           openssl s_client -showcerts -connect maven.java.net:443 < /dev/null 2> /dev/null | openssl x509 -outform PEM > maven_cert.pem
           sudo keytool -import -trustcacerts -file maven_cert.pem -alias maven-snapshot -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt
-      - name: "DELTE ME: Test java version"
-        run: |
-          java -version
-          mvn --version
       - name: Run Maven Tests
+        id: test
         run: |
           cd LendARead2-AWS/LendARead2/
           mvn clean test
+          OUTPUT=$(echo $?)
+          echo $OUTPUT
+          echo "TEST_RESULT=$OUTPUT" >> $GITHUB_OUTPUT
+
+  delete-tag-if-tests-failed:
+    runs-on: ubuntu-latest
+    needs: [run-tests]
+    if: needs.run-tests.outputs.TEST_RESULT != '0'
+    steps:
+      - name: DELETE ME
+        run: echo "TEST FAILED"
+
   
 
 
