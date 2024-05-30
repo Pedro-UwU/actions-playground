@@ -43,10 +43,9 @@ jobs:
         id: test
         run: |
           cd LendARead2-AWS/LendARead2/
-          mvn clean test
-          OUTPUT=$(echo $?)
+          mvn clean test || OUTPUT=$?
           echo $OUTPUT
-          echo "TEST_RESULT=$OUTPUT" >> $GITHUB_OUTPUT
+          echo "TEST_RESULT=${OUTPUT:-0}" >> $GITHUB_OUTPUT
 
   delete-tag-if-tests-failed:
     runs-on: ubuntu-latest
